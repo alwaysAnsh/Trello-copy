@@ -7,7 +7,7 @@ import axios from 'axios'
 import {useSelector, useDispatch} from 'react-redux'
 import {deleteTask} from '../../redux/taskSlice.js'
 import {Link} from 'react-router-dom'
-import { CiClock2 } from "react-icons/ci";
+
 // import { FaRegClock } from "react-icons/fa";
 import { CiClock2 } from "react-icons/ci";
 
