@@ -8,7 +8,9 @@ import {useSelector, useDispatch} from 'react-redux'
 import {deleteTask} from '../../redux/taskSlice.js'
 import {Link} from 'react-router-dom'
 import { CiClock2 } from "react-icons/ci";
-import { FaRegClock } from "react-icons/fa";
+// import { FaRegClock } from "react-icons/fa";
+import { CiClock2 } from "react-icons/ci";
+
 
 
 const Task = ({ task, index }) => {
@@ -88,7 +90,7 @@ const Task = ({ task, index }) => {
           <TrimmedText text={task.description} wordLimit={10} className='text-green-800' />
           <span className='inline mt-2 mb-2 text-white'><p className={getPriorityColor(task.priority)}>{task.priority}</p></span>
           <div className='flex flex-row gap-2 items-center'>
-            <FaRegClock className='text-md  text-black ' />
+            <CiClock2 className='text-md  text-black ' />
             <p className='font-bold text-gray-400'>{formatDate(task.createdAt)}</p>
           </div>
           <p className=''> {getElapsedTime(task.createdAt)}</p>

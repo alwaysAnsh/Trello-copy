@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchTasks, updateTaskStatus } from '../redux/taskSlice';
 import { Link } from 'react-router-dom';
 import TaskColumn from '../components/dashboard/TaskColumn';
-import { FaRegBell } from "react-icons/fa";
+// import { FaRegBell } from "react-icons/fa";
+import { CiBellOn } from "react-icons/ci";
+
 import { IoPlayForwardOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
 import { CiViewBoard } from "react-icons/ci";
@@ -98,7 +100,7 @@ const Dashboard = () => {
         </div>
         <div className='flex flex-row justify-between items-center'>
           <div className='flex flex-row gap-4' >
-            <FaRegBell className='text-center flex flex-row items-center justify-center text-[20px]' />
+            <CiBellOn className='text-center flex flex-row items-center justify-center text-[20px]' />
             <IoPlayForwardOutline className='text-center flex flex-row items-center justify-center text-[20px]'/>
           </div>
           <button className=' text-center rounded-md bg-gray-400 text-black p-2 hover:bg-gray-300 transition-all duration-200 mr-2' onClick= {handleLogout}>Logout</button>
