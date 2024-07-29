@@ -17,6 +17,7 @@ const taskSchema = new mongoose.Schema({
   priority: {
     type: String,
     enum: ['Low', 'Medium', 'Urgent'],
+    required: true,
   },
   deadline: {
     type: Date,
@@ -36,5 +37,5 @@ const taskSchema = new mongoose.Schema({
   }
 }, {timestamps:true});
 const Task = mongoose.model('Task',taskSchema)
-// module.exports = mongoose.model('Task', taskSchema);
+
 export default Task;

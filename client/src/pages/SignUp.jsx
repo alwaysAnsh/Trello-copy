@@ -53,10 +53,10 @@ const SignUp = () => {
             <div className=" flex flex-col items-center">
               <div className="text-center">
                 <h1 className="text-2xl xl:text-4xl font-extrabold text-blue-900">
-                  Student Sign up
+                   Sign up
                 </h1>
                 <p className="text-[12px] text-gray-500">
-                  Hey enter your details to create your account
+                  Hey!! enter your details to create your account
                 </p>
               </div>
               <div className="w-full flex-1 mt-8">
@@ -64,7 +64,7 @@ const SignUp = () => {
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="text"
-                    placeholder="Enter your First Name"
+                    placeholder="First Name (required)"
                     required
                     name='firstName'
                     value={formData.firstName}
@@ -73,7 +73,7 @@ const SignUp = () => {
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="text"
-                    placeholder="Enter your Last Name"
+                    placeholder="Last Name (required)"
                     required
                     name='lastName'
                     value={formData.lastName}
@@ -82,21 +82,17 @@ const SignUp = () => {
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="email"
-                    placeholder= "enter your email"
+                    placeholder= "enter your email (required)"
                     required
                     name='email'
                     value={formData.email}
                     onChange = {handleOnChange} 
                   />
-                  {/* <input
-                    className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    type="tel"
-                    placeholder="Enter your phone"
-                  /> */}
+                  
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="password"
-                    placeholder= "Password"
+                    placeholder= "Password (required)"
                     required
                     name='password'
                     value={formData.password}

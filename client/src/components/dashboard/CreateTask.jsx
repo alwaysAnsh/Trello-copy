@@ -60,7 +60,7 @@ const CreateTask = () => {
 
 
   return (
-    <div className=' mt-0 bg-gradient-to-r from-rose-700  via-red-500 to-pink-600 h-screen' >
+    <div className=' mt-0  h-screen' >
       <div className='mx-auto text-center font-bold uppercase text-5xl pt-5 font-serif'>
         <h1>Create Task</h1>
       </div>
@@ -121,63 +121,3 @@ const CreateTask = () => {
 export default CreateTask
 
 
-// {/* <form onSubmit = {handleOnSubmit}>
-//             <div>
-//                 <input type="text"
-//                  placeholder= "TITLE"
-//                  required
-//                  name='title'
-//                  value={formData.title}
-//                  onChange = {handleOnChange}
-//                  />
-//             </div>
-//             <div>
-//             <label >
-//                 Status: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='status'
-//                 value={formData.status}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label>
-//             <label >
-//                 Priority: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='priority'
-//                 value={formData.priority}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label>
-//             {/* <label >
-//                 Deadline: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='status'
-//                 value={formData.status}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label> */}
-//             <label >
-//                 Descriptioin: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='description'
-//                 value={formData.description}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label>
-//             </div>
-            
-//                 <button type='submit' >Create</button>
-            
-//         </form> */}

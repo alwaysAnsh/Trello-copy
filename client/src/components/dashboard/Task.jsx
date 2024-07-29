@@ -19,7 +19,10 @@ const Task = ({ task, index }) => {
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
-    return `${date.toLocaleDateString()} `;
+    const day = String(date.getDate()).padStart(2, '0'); 
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
 
   const getElapsedTime = (createdAt) => {
@@ -51,9 +54,9 @@ const Task = ({ task, index }) => {
       case 'low':
         return 'bg-green-500  inline p-[6px] rounded-lg text-sm';
       case 'medium':
-        return 'bg-orange-400  inline p-2 rounded-lg';
+        return 'bg-orange-400  inline p-2 rounded-lg text-sm';
       case 'urgent':
-        return 'bg-red-700  inline p-2 rounded-lg';
+        return 'bg-red-700  inline p-2 rounded-lg text-sm';
       default:
         return '';
     }
@@ -96,14 +99,7 @@ const Task = ({ task, index }) => {
             <MdDelete className='text-red-700 text-lg cursor-pointer' onClick={handleDelete}/>
 
           </div>
-          {/* <h3>{task.title}</h3>
-          <h3 className='text-green-600 ml-3'>{task._id}</h3>
-          <h3 className='text-red-600 ml-3'>{task.status}</h3> */}
-
-          {/* <p>{task.description}</p>
-          <span className={`priority ${getPriorityColor(task.priority)}`}>{task.priority}</span>
-          <p>{formatDate(task.createdAt)}</p>
-          <p>{getElapsedTime(task.createdAt)}</p> */}
+         
         </div>
       )}
     </Draggable>

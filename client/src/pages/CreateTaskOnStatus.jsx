@@ -71,9 +71,9 @@ const CreateTaskOnStatus = () => {
 
 
   return (
-    <div className=' mt-0 bg-gradient-to-r from-rose-700  via-red-500 to-pink-600 h-screen' >
-      <div className='mx-auto text-center font-bold uppercase text-5xl pt-5 font-serif'>
-        <h1>Create Task on Status</h1>
+    <div className=' mt-0  h-screen' >
+      <div className='mx-auto text-center font-bold uppercase text-4xl pt-5 font-serif'>
+        <h1>Create Task for <span className='text-blue-600' >{status}</span></h1>
       </div>
         
 

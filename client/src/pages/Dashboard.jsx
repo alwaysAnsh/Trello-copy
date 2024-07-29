@@ -34,6 +34,17 @@ const Dashboard = () => {
   // usePreventWindowScrollOnDrag();
   console.log("tasks in dashboard: ", tasks)
 
+  const getGreeting = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
   useEffect(() => {
     dispatch(fetchTasks(currentUser._id));
   }, [dispatch,currentUser]);
@@ -83,7 +94,7 @@ const Dashboard = () => {
         <div>
         <div className='flex flex-row gap-4 items-center mb-2'>
           <img src={currentUser.image} className='rounded-full w-8 h-8 '  alt="" />
-          <p className='text-xl  font-pacific font-semibold' >{currentUser.firstName}</p>
+          <p className='text-xl  font-serif font-semibold' >{currentUser.firstName}</p>
         </div>
         <div className='flex flex-row justify-between items-center'>
           <div className='flex flex-row gap-4' >
@@ -124,7 +135,7 @@ const Dashboard = () => {
           </Link>
         </div>
         </div>
-        <div className='flex flex-row justify-center items-center gap-2 bg-gray-400 rounded-md w-3/4 p-2 cursor-pointer hover:bg-gray-500 transition-all duration-200  '>
+        <div className=' flex flex-row justify-center items-center gap-2 bg-gray-400 rounded-md w-3/4 p-2 cursor-pointer hover:bg-gray-500 transition-all duration-200  '>
           <div className='h-full text-[40px] opacity-70'><GoDownload/></div>
           <div className='flex flex-col items-center justify-between' >
             <p className='font-bold' >Dowload the App</p>
@@ -134,7 +145,7 @@ const Dashboard = () => {
       </div>
 
       <div className='item2' >
-        <p className='font-bold text-5xl font-serif ' >Good Morning, <span className='uppercase font-pacific text-blue-900' >{currentUser.firstName}</span></p>
+        <p className='font-bold text-5xl font-serif ' >{getGreeting()}, <span className='uppercase font-serif text-blue-900' >{currentUser.firstName}</span></p>
         
         <div className='flex flex-row justify-evenly items-center text-left mt-5'>
           <Card title={"Introducing Tags"} desc={"Easily categorize and find your notes by adding tags. keep your workspace clutter free and efficient."}/>
