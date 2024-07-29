@@ -10,7 +10,7 @@ import { CiViewBoard } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import { PiMicrosoftTeamsLogoThin } from "react-icons/pi";
 import { SiSimpleanalytics } from "react-icons/si";
-import { FaPlusCircle } from "react-icons/fa";
+// import { FaPlusCircle } from "react-icons/fa";
 import { GoDownload } from "react-icons/go";
 import { DragDropContext } from 'react-beautiful-dnd';
 import {useNavigate} from 'react-router-dom'
@@ -130,7 +130,7 @@ const Dashboard = () => {
           <Link to='/create-task' >
             <div className='cursor-pointer flex flex-row gap-2 bg-gradient-to-r from-cyan-200 to-cyan-400 rounded-md items-center p-4 w-3/4 text-lg font-bold hover:bg-blue-600 transition-all duration-200 mt-4 mr-2' >
               <button>Create new task</button>
-              <FaPlusCircle/>
+              {/* <FaPlusCircle/> */}
             </div>
           </Link>
         </div>
