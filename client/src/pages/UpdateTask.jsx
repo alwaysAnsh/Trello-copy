@@ -1,16 +1,27 @@
-import {React, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {React, useState, useEffect} from 'react'
+import {useNavigate, useParams, useLocation} from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import '../../App.css'
+import axios from 'axios'
 
-const CreateTask = () => {
+
+const UpdateTask = () => {
 
     const { currentUser } = useSelector((state) => state.user);
+    const location = useLocation();
+    // console.log("taskid from params: ", location)
+
+    const getIdFromUrl = () => {
+        const path = location.pathname;
+        const parts = path.split('/');
+        return parts[parts.length - 1]; // Get the last part of the path
+      };
+      const taskId = getIdFromUrl();
+    //   console.log("taskid: ", taskId)
 
     const [formData, setFormData ] = useState({
         title: '',
-        status: 'Not Selected',
-        priority: 'Not Selected',
+        status: 'Under Review',
+        priority: 'Low',
         description: ''
     });
     const [loading,setLoading] = useState(false);
@@ -32,8 +43,8 @@ const CreateTask = () => {
           
           setLoading(true);
           setError(false);
-          const res = await fetch('http://localhost:4000/api/v1/createTask', {
-            method: 'POST',
+          const res = await fetch(`http://localhost:4000/api/v1/updateTask/${taskId}`, {
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
@@ -49,20 +60,33 @@ const CreateTask = () => {
             setError(data.message);
           }
           console.log("data of creation of task is : ", data)
-          navigate(`/dashboard/${data.task.user}`);
+          navigate(`/dashboard/${data.user}`);
         } catch (error) {
           setError(error.message);
           setLoading(false);
         }
       };
 
-
+      useEffect(() => {
+        if (taskId) {
+          const fetchTask = async () => {
+            try {
+              const response = await axios.get(`http://localhost:4000/api/v1/getTaskInfo/${taskId}`);
+              setFormData(response.data);
+            } catch (error) {
+              console.error("Error fetching task:", error);
+            }
+          };
+    
+          fetchTask();
+        }
+      }, [taskId]);
 
 
   return (
-    <div className=' mt-0 bg-gradient-to-r from-rose-700  via-red-500 to-pink-600 h-screen' >
+    <div className=' mt-0  h-screen' >
       <div className='mx-auto text-center font-bold uppercase text-5xl pt-5 font-serif'>
-        <h1>Create Task</h1>
+        <h1>Update Task</h1>
       </div>
         
 
@@ -86,7 +110,6 @@ const CreateTask = () => {
     <option>In Progress</option>
     <option>Under Review</option>
     <option>Completed</option>
-    <option>Not Selected</option>
   </select>
   <label for="countries" class="block mb-2 mt-2 text-sm font-medium text-gray-900 ">Priority</label>
   <select 
@@ -99,7 +122,6 @@ const CreateTask = () => {
     <option className='text-green-500 font-semibold' >Low</option>
     <option className='text-orange-400 font-semibold' >Medium</option>
     <option className='text-red-600 font-semibold' >Urgent</option>
-    <option className='text-gray-600 font-semibold' >Not Selected</option>
     
   </select>
   
@@ -118,66 +140,4 @@ const CreateTask = () => {
   )
 }
 
-export default CreateTask
-
-
-// {/* <form onSubmit = {handleOnSubmit}>
-//             <div>
-//                 <input type="text"
-//                  placeholder= "TITLE"
-//                  required
-//                  name='title'
-//                  value={formData.title}
-//                  onChange = {handleOnChange}
-//                  />
-//             </div>
-//             <div>
-//             <label >
-//                 Status: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='status'
-//                 value={formData.status}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label>
-//             <label >
-//                 Priority: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='priority'
-//                 value={formData.priority}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label>
-//             {/* <label >
-//                 Deadline: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='status'
-//                 value={formData.status}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label> */}
-//             <label >
-//                 Descriptioin: 
-//                 <input 
-//                 type="text" 
-//                 placeholder= "Not Selected"
-//                 required
-//                 name='description'
-//                 value={formData.description}
-//                 onChange = {handleOnChange} 
-//                 />
-//             </label>
-//             </div>
-            
-//                 <button type='submit' >Create</button>
-            
-//         </form> */}
+export default UpdateTask

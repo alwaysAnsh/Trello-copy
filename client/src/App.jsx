@@ -8,6 +8,8 @@ import { SignIn } from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import CreateTask from './components/dashboard/CreateTask';
 import PrivateRoute from './components/PrivateRoute';
+import UpdateTask from './pages/UpdateTask';
+import CreateTaskOnStatus from './pages/CreateTaskOnStatus';
 
 function App() {
   
@@ -23,6 +25,8 @@ function App() {
          <Route  element={<PrivateRoute/>} >
          <Route path="/dashboard/:id" element={<Dashboard/>} />
          <Route path="/create-task" element={<CreateTask/>} />
+         <Route path="/updateTask/:id" element={<UpdateTask/>} />
+         <Route path="/create-task-on-status/:status" element={<CreateTaskOnStatus/>} />
          </Route>
 
 

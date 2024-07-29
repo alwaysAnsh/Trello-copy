@@ -6,6 +6,7 @@ export const createTask = async (req, res) => {
     console.log("create task appi hit!!");
     const { title, description, status, priority, deadline } = req.body;
     const userId = req.user.id;
+    // console.log("userid in create api: ", userId)
 
     const task = new Task({
       title,
@@ -14,6 +15,7 @@ export const createTask = async (req, res) => {
       priority,
       deadline,
       user: userId,
+      
     });
 
     await task.save();

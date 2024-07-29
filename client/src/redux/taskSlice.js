@@ -17,6 +17,22 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (userId, th
   }
 });
 
+export const updateTaskStatus = createAsyncThunk('tasks/updateTaskStatus', async ({ taskId, newStatus }) => {
+  try {
+    const response = await axios.patch(`http://localhost:4000/api/v1/updateTaskStatus`, { taskId,status: newStatus });
+    return response.data;
+  } catch (error) {
+    // console.log("call hi nhi gyi")
+  }
+});
+
+export const deleteTask = createAsyncThunk('tasks/deleteTask', async (taskId, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const token = state.user.currentUser.token;
+  await axios.delete(`http://localhost:4000/api/v1/deleteTask/${taskId}`, { data: { token } });
+  return taskId;
+});
+
 const taskSlice = createSlice({
   name: 'tasks',
   initialState,
@@ -33,10 +49,24 @@ const taskSlice = createSlice({
         state.tasks = action.payload;
         state.loading = false;
         state.error = null;
+        console.log("tasks fetched from slice: ", state.tasks )
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.tasks = state.tasks.filter(task => task._id !== action.payload);
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
+        state.error = action.error.message;
       })
       .addCase(fetchTasks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(updateTaskStatus.fulfilled, (state, action) => {
+        const updatedTask = action.payload;
+        const index = state.tasks.findIndex(task => task._id === updatedTask._id);
+        if (index !== -1) {
+          state.tasks[index].status = updatedTask.status;
+        }
       });
   },
 });

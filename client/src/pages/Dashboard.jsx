@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTasks } from '../redux/taskSlice';
+import { fetchTasks, updateTaskStatus } from '../redux/taskSlice';
 import { Link } from 'react-router-dom';
 import TaskColumn from '../components/dashboard/TaskColumn';
 import { FaRegBell } from "react-icons/fa";
@@ -12,23 +12,31 @@ import { PiMicrosoftTeamsLogoThin } from "react-icons/pi";
 import { SiSimpleanalytics } from "react-icons/si";
 import { FaPlusCircle } from "react-icons/fa";
 import { GoDownload } from "react-icons/go";
+import { DragDropContext } from 'react-beautiful-dnd';
+import {useNavigate} from 'react-router-dom'
 
 
 import '../App.css'
 import Card from '../components/Card';
 import SearchModal from '../components/SearchModal';
 import CustomizeArea from '../components/CustomizeArea';
+import usePreventWindowScrollOnDrag from '../customHooks/preventScrollHook';
+import { setToken, setUser } from '../redux/authSlice';
 
-// import './Dashboard.css';
+
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const { tasks, loading, error } = useSelector((state) => state.tasks);
+  const [taskArray,setTaskArray ] = useState([tasks])
+  const navigate = useNavigate();
+  // usePreventWindowScrollOnDrag();
+  console.log("tasks in dashboard: ", tasks)
 
   useEffect(() => {
     dispatch(fetchTasks(currentUser._id));
-  }, [dispatch]);
+  }, [dispatch,currentUser]);
 
   const columns = {
     'To-Do': [],
@@ -40,18 +48,49 @@ const Dashboard = () => {
   tasks.forEach((task) => {
     columns[task.status].push(task);
   });
+  // console.log("colums data: ", columns)
 
+  const onDragEnd = (result) => {
+    
+    const { destination, source, draggableId } = result;
+    // console.log("destination",destination)
+    // console.log("source",source)
+    // console.log("draggableId",draggableId)
+    if (!destination) return;
+
+    if (destination.droppableId == source.droppableId) {
+      return;
+    }
+    const currentStatus = source.droppableId;
+    const newStatus = destination.droppableId;
+    // console.log("new stataus : ", newStatus)
+    dispatch(updateTaskStatus({ taskId: draggableId, newStatus: destination.droppableId }));
+    
+    
+
+    
+  };
+
+  const handleLogout = () => {
+    dispatch(setToken(null));
+    dispatch(setUser(null));
+    navigate('/signin')
+  }
+  
   return (
     <div className="dashboard">
       <div className='item1 flex flex-col justify-between' >
         <div>
-        <p className='uppercase' >{currentUser.firstName}</p>
+        <div className='flex flex-row gap-4 items-center mb-2'>
+          <img src={currentUser.image} className='rounded-full w-8 h-8 '  alt="" />
+          <p className='text-xl  font-pacific font-semibold' >{currentUser.firstName}</p>
+        </div>
         <div className='flex flex-row justify-between items-center'>
           <div className='flex flex-row gap-4' >
             <FaRegBell className='text-center flex flex-row items-center justify-center text-[20px]' />
             <IoPlayForwardOutline className='text-center flex flex-row items-center justify-center text-[20px]'/>
           </div>
-          <button className=' text-center rounded-md bg-gray-400 text-black p-2 hover:bg-gray-300 transition-all duration-200 mr-2' >Logout</button>
+          <button className=' text-center rounded-md bg-gray-400 text-black p-2 hover:bg-gray-300 transition-all duration-200 mr-2' onClick= {handleLogout}>Logout</button>
         </div>
 
         <div className='w-full text-left flex flex-col gap-2' >
@@ -78,7 +117,7 @@ const Dashboard = () => {
         </div>
         <div>
           <Link to='/create-task' >
-            <div className='cursor-pointer flex flex-row gap-2 bg-blue-500 rounded-md items-center p-4 w-3/4 text-lg font-bold hover:bg-blue-600 transition-all duration-200 mt-4 mr-2' >
+            <div className='cursor-pointer flex flex-row gap-2 bg-gradient-to-r from-cyan-200 to-cyan-400 rounded-md items-center p-4 w-3/4 text-lg font-bold hover:bg-blue-600 transition-all duration-200 mt-4 mr-2' >
               <button>Create new task</button>
               <FaPlusCircle/>
             </div>
@@ -95,12 +134,12 @@ const Dashboard = () => {
       </div>
 
       <div className='item2' >
-        <p className='font-bold text-5xl ' >Good Morning, <span className='uppercase' >{currentUser.firstName}</span></p>
+        <p className='font-bold text-5xl font-serif ' >Good Morning, <span className='uppercase font-pacific text-blue-900' >{currentUser.firstName}</span></p>
         
         <div className='flex flex-row justify-evenly items-center text-left mt-5'>
           <Card title={"Introducing Tags"} desc={"Easily categorize and find your notes by adding tags. keep your workspace clutter free and efficient."}/>
-          <Card title={"Introducing Tags"} desc={"Easily categorize and find your notes by adding tags. keep your workspace clutter free and efficient."}/>
-          <Card title={"Introducing Tags"} desc={"Easily categorize and find your notes by adding tags. keep your workspace clutter free and efficient."}/>
+          <Card title={"Share Notes Instantly"} desc={"Effortlessly share your notes with others via email or link. Enhance collaboration with quick sharing options"}/>
+          <Card title={"Access Anywhere"} desc={"Sync your notes across all devices. Stay productive whether you're on your phone, tablet, or computer."}/>
         </div>
 
         <div className='flex flex-row justify-between items-center mt-4' >
@@ -111,50 +150,18 @@ const Dashboard = () => {
         {loading && <p>Loading tasks...</p>}
         {error && <p>Error loading tasks: {error}</p>}
 
-        <div className=" flex flex-row justify-between items-start   border-2 border-red-500">
-          {Object.keys(columns).map((status) => (
-            <TaskColumn key={status} status={status} tasks={columns[status]} />
+        <DragDropContext onDragEnd={onDragEnd}>
+        <div className="flex flex-row justify-between items-start mt-4">
+          {Object.keys(columns).map((status,index) => (
+            <TaskColumn key={status} status={status} tasks={columns[status]} index = {index} />
           ))}
         </div>
+      </DragDropContext>
+
+        
       </div>
     </div>
   );
 };
 
 export default Dashboard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from 'react'
-// import {Link} from 'react-router-dom'
-// import { useSelector } from 'react-redux';
-
-
-// const Dashboard = () => {
-//   const {currentUser} = useSelector((state) => state.user) 
-//   return (
-//     <div>
-//         <p>Dashboard</p>
-//         <p>Welcome {currentUser.firstName}</p>
-//         <Link to='/create-task' >
-//             <button>
-//                 Create
-//             </button>
-//         </Link>
-//     </div>
-//   )
-// }
-
-// export default Dashboard

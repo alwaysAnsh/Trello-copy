@@ -3,8 +3,10 @@ import User from '../../models/user.model.js'
 
 export const deleteTask = async (req, res) => {
   try {
+    console.log("inside delete api")
     const taskId = req.params.id;
     const userId = req.user.id;
+    
 
     await Task.findByIdAndDelete(taskId);
 

@@ -26,7 +26,15 @@ const taskSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-});
+  createdAt:{
+    type: Date,
+    default: Date.now()
+  },
+  updatedAt:{
+    type: Date,
+    default: Date.now()
+  }
+}, {timestamps:true});
 const Task = mongoose.model('Task',taskSchema)
 // module.exports = mongoose.model('Task', taskSchema);
 export default Task;

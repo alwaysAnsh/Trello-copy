@@ -28,7 +28,7 @@ const CustomizeArea = () => {
             <CiShare2/>
         </div>
         <Link to='/create-task' >
-            <div className='cursor-pointer flex flex-row gap-2 bg-blue-500 rounded-md items-center p-2 text-lg font-bold hover:bg-blue-600 transition-all duration-200  mr-2' >
+            <div className='cursor-pointer flex flex-row gap-2 bg-gradient-to-r from-indigo-400 to-cyan-400 rounded-md items-center p-2 text-lg font-bold  hover:bg-gradient-to-r hover:from-indigo-300 hover:to-cyan-300 hover:transition-all hover:duration-300  mr-2' >
               <button>Create new task</button>
               <FaPlusCircle/>
             </div>

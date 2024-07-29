@@ -10,7 +10,7 @@ body, html{
 
 .dashboard{
   display: grid;
-  grid-template-columns: 285px auto auto auto  ;
+  grid-template-columns: 285px auto   ;
   height: 100vh;
   gap: 0px;
   
@@ -24,7 +24,13 @@ body, html{
 }
 .item2 {
   grid-column-start: 2;
-  grid-column-end: 5;
+  grid-column-end: 3;
   background-color: #e0e0dc9e;
   padding: 20px;
 }
+/* .background{
+  background-image: url('https://img.freepik.com/free-photo/flat-lay-minimalistic-geometrical-figures-with-copy-space_23-2148830290.jpg?w=740&t=st=1722243469~exp=1722244069~hmac=94cae8705c69d37ba9313e31c63fa857fbf998389845d3bf03b04080755744a7');
+  height: 100vh;
+  background-repeat: no-repeat;
+  width: 100vw;
+} */

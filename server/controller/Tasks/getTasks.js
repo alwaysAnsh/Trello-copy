@@ -2,10 +2,10 @@ import Task from '../../models/tasks.model.js'
 
 export const getUserTasks = async (req, res) => {
   try {
-    console.log("req.user inside getapi: ", req.params);
+    // console.log("req.user inside getapi: ", req.user);
     // console.log("inside getapi");
     const userId = req.params.id;
-    console.log("userId inside getapi: ", userId);
+    // console.log("userId inside getapi: ", userId);
 
     const tasks = await Task.find({ user: userId });
 
